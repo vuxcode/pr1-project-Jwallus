@@ -1,115 +1,115 @@
-<button onclick="feedPet()">Feed pet</button>
-<button onclick="playWithPet()">Play with Pet</button>
-<button onclick="restPet()">Let the pet rest</button>
-<script>
+<!DOCTYPE html>
 
-// Setting up variables
+<head>
+    <title>Virtual Pet</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            color: #4caf50;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #027916;
+        }
+        button:active {
+            background-color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wally's Virtual Pet</h1>
+    <!-- pet name as a separate paragraph to showcase it once it's been entered by the user -->
+    <p id="pet-name"></p>
 
-//Base stats
-// Health
-var health = 50;
-var maxHealth = 100;
-// Energy
-var energy = 50;
-var maxEnergy = 100;
-// Happiness
-var happiness = 50;
-var maxHappiness = 100;
-// Hunger
-var hunger = 50;
-var maxHunger = 100;
+    <!-- Buttons to click -->
+    <div class="buttons">
+        <button onclick="feedPet()">Feed Pet</button>
+        <button onclick="playWithPet()">Play with Pet</button>
+        <button onclick="restPet()">Let the pet rest</button>
+    </div>
 
-//Things we use to influence the base stats
-var foodItem1 = 10;
-var foodItem2 = 20;
-var toyItem1 = 20;
-var toyItem2 = 30;
-var restingTime = 10;
+    <script>
+        // Base stats, both starting numbers and max limit
+        // Health
+        var health = 50; 
+        var maxHealth = 100;
+        // Energy
+        var energy = 50 
+        var maxEnergy = 100;
+        // Happiness
+        var happiness = 50 
+        var maxHappiness = 100;
+        // Hunger
+        var hunger = 50 
+        var maxHunger = 100;
 
-//Coin variables for purchase functionality
-var coin = 100;
-var maxBudget = 500;
+        // Items that has an effect on the base stats
+        var foodItem1 = 10;
+        var foodItem2 = 20;
+        var toyItem1 = 20;
+        var toyItem2 = 30;
+        var restingTime = 10;
 
-//Naming your virtual pet with a prompt and store the variable
-var petName = prompt("Welcome to Wally's Virtual Pet! Please name your pet!");
+        //Coin variables for purchase functionality
+        var coin = 100;
+        var maxBudget = 500;
 
-// Confirms the name for the user
-alert(`Okay, so your pet is named ${petName}`);
+        // Naming pet and confirms pet name
+        var petName = prompt("Welcome to Wally's Virtual Pet! Please name your pet!");
 
-// Function used to feed the pet and influence appropriate stats
-function feedPet()
-{
-    // If hunger is less than max, meaning the pet is hungry and can therefore be fed
-    if (hunger < maxHunger)
-    {
-        // If we currently have food item 1 (which for now is always the case)
-        if (foodItem1)
+        // Get the pet-name ID and print it on the document, confirming the name for the user and presents it using Template Literal ``
+        document.getElementById("pet-name").textContent = `Your pet's name is ${petName}`;
+
+        // Feeding the pet
+        function feedPet() 
+        {
+            if (hunger < maxHunger) 
             {
-                // Hunger is increased, taking the value of what hunger currently is and adds the value of the food item being given
-                hunger = hunger + foodItem1;
-                // energy is also increased using the same method
-                energy = energy + foodItem1;
-            }
-        else if (foodItem2)
-        {
-            // Hunger is increased, taking the value of what hunger currently is and adds the value of the food item being given
-            hunger = hunger + foodItem2;
-            // energy is also increased using the same method
-            energy = energy + foodItem2;
-        }
-        // Running an update function so the stats are updated to its current values and tells the user
-        updateStats();
-    } 
-}
-
-// Function used to play with the pet to influence the stats
-function playWithPet()
-{
-    if (energy > 0 && hunger > 0 && happiness < maxHappiness)
-        {
-            if (toyItem1)
-                {
-                    // Happiness is increased with the value of the toy item
-                    happiness = happiness + toyItem1;
-                    // energy is decreased with the value of the toy item
-                    energy = energy - toyItem1;
-                    // hunger is decreased by the value of the toy item
-                    hunger = hunger - toyItem1;            
-                }
-            else if (toyItem2)
-                {
-                    // Happiness is increased with the value of the toy item
-                    happiness = happiness + toyItem2;
-                    // energy is decreased with the value of the toy item
-                    energy = energy - toyItem2;
-                    // hunger is decreased by the value of the toy item
-                    hunger = hunger - toyItem2;       
-                }
-                // Running an update function so the stats are updated to its current values and tells the user
+                hunger = Math.min(hunger + foodItem1);
+                energy = Math.min(energy + foodItem1);
                 updateStats();
+            }
         }
-}
 
-// Function used to let the pet rest and regain energy
-function restPet()
-{
-    // If the pet's energy is less than its maximum energy, the pet can rest
-    if (energy < maxEnergy)
+        // Playing with the pet
+        function playWithPet() 
         {
-            // Take current energy and add to it with the value of restingTime
-            energy = energy + restingTime;
+            if (energy > 0 && hunger > 0 && happiness <= maxHappiness) {
+                happiness = Math.min(happiness + toyItem1);
+                energy = Math.max(energy - toyItem1);
+                hunger = Math.max(hunger - toyItem1);
+                updateStats();
+            }
         }
-        // Running an update function so the stats are updated to its current values and tells the user
-        updateStats();
-}
 
-// Function to always update the stats after each input the user does
-function updateStats()
-{
-    console.log("Your pet's health is: " + health);
-    console.log("Your pet's hunger is: " + hunger);
-    console.log("Your pet's energy is: " + energy);
-    console.log("Your pet's happiness is: " + happiness);
-}
+        // Resting the pet
+        function restPet() 
+        {
+            if (energy < maxEnergy) {
+                energy = Math.min(energy + restingTime);
+                updateStats();
+            }
+        }
 
-</script>
+        // Function to always update the stats after each input the user does
+        function updateStats()
+        {
+            console.log("Your pet's health is: " + health);
+            console.log("Your pet's hunger is: " + hunger);
+            console.log("Your pet's energy is: " + energy);
+            console.log("Your pet's happiness is: " + happiness);
+        }
+    </script>
+</body>
+</html>
