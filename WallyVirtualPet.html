@@ -3,27 +3,47 @@
 <head>
     <title>Virtual Pet</title>
     <style>
-        body {
+        body 
+        {
             font-family: sans-serif;
             text-align: center;
             background-color: #f0f8ff;
         }
-        h1 {
-            color: #4caf50;
+        h1 
+        {
+            color: #234981;
+            font-family: sans-serif;
         }
-        .buttons {
+        .stat 
+        {
+            margin: 10px 0;
+        }
+        .stat-bar 
+        {
+            width: 80%;
+            height: 20px;
+            background-color: #c0c0c0;
+            border-radius: 8px;
+            margin: 0 auto;
+        }
+        .buttons 
+        {
             margin-top: 20px;
         }
-        button {
+        button 
+        {
             padding: 10px 20px;
             margin: 5px;
             font-size: 16px;
+            font-weight: bold;
         }
-        button:hover {
-            background-color: #027916;
+        button:hover 
+        {
+            background-color: #5c9265;
         }
-        button:active {
-            background-color: #bbb;
+        button:active 
+        {
+            background-color: #b4b4b4;
         }
     </style>
 </head>
@@ -36,7 +56,7 @@
     <div class="stat">
         <label>Health</label>
         <div class="stat-bar">
-            <div class="stat-bar-inner" id="health-bar" style="background-color: #4caf50; width: 50%;">50</div>
+            <div class="stat-bar-inner" id="health-bar" style="background-color: #256427; width: 50%;">50</div>
         </div>
 
     <!-- Buttons to click -->
