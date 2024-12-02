@@ -133,14 +133,6 @@
         {
         for (var i = 0; i < 1; i++) // Loop that will run once
             {
-                // Decrease health stat by 1, but dont go below 0
-                if (health > 0) 
-                {
-                    health--;;
-                } else 
-                {
-                    health = 0;
-                }
                 // Decrease energy stat by 1, but dont go below 0
                 if (energy > 0) 
                 {
@@ -152,7 +144,7 @@
                 // Decrease happiness stat by 1, but dont go below 0
                 if (happiness > 0) 
                 {
-                    happiness--;
+                    happiness = happiness - 2;
                 } else 
                 {
                     happiness = 0;
@@ -171,8 +163,28 @@
         setTimeout(decreaseStats, 3000); // Delay in milliseconds for the loop to run again
         }
 
-    // Start the loop
+    function decreaseHealth()
+        {
+            for (var i = 0; i < 1; i++) // Loop that will run once
+            {
+                // Decrease health stat by 1, but dont go below 0
+                if (hunger <= 0)
+                    {
+                        health--;   
+                    }
+                else
+                {
+                    health = maxHealth;
+                }
+            }        
+        updateStats(); // Update the stats
+        setTimeout(decreaseHealth, 1000); // Delay in milliseconds for the loop to run again
+        }
+
+    // Start the loop to continuously decrease stats
     decreaseStats();
+    // Start the loop to decrease health IF hunger is 0
+    decreaseHealth();
 
             
     // Feeding the pet
