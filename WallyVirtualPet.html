@@ -45,9 +45,11 @@
         button 
         {
             padding: 10px 20px;
-            margin: 5px;
+            margin: 40px 60px;
             font-size: 16px;
             font-weight: bold;
+            border-style: solid;
+            border-radius: 50%;
         }
         button:hover 
         {
@@ -68,7 +70,7 @@
     <div class="stat">
         <label>Health</label>
         <div class="stat-bar">
-            <div class="stat-bar-inner" id="health-bar" style="background-color: #256427; width: 100%;">100</div>
+            <div class="stat-bar-inner" id="health-bar" style="background-color: #256427; width: 100%;">50</div>
         </div>
     </div>
     <div class="stat">
@@ -100,7 +102,7 @@
     <script>
         // Base stats, both starting numbers and max limit
         // Health
-        var health = 100; 
+        var health = 50; 
         var maxHealth = 100;
         // Energy
         var energy = 50 
@@ -122,7 +124,7 @@
         var foodItem2 = 10;
         var toyItem1 = 10;
         var toyItem2 = 20;
-        var restingTime = 5;
+        var restingTime = 20;
 
         //Coin variables for purchase functionality
         var coin = 100;
@@ -237,7 +239,7 @@
     {
         if (energy < maxEnergy) {
             energy = Math.min(maxEnergy, energy + restingTime);
-            disableButtons(restPetButton, 3000);
+            disableButtons(restPetButton, 7000);
             updateStats();
         }
     }
