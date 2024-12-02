@@ -92,9 +92,9 @@
 
     <!-- Buttons to click -->
     <div class="buttons">
-        <button onclick="feedPet()">Feed Pet</button>
-        <button onclick="playWithPet()">Play with Pet</button>
-        <button onclick="restPet()">Let the pet rest</button>
+        <button id="feedPet">Feed Pet</button>
+        <button id="playWithPet">Play with Pet</button>
+        <button id="restPet">Let the pet rest</button>
     </div>
 
     <script>
@@ -112,6 +112,11 @@
         var hunger = 50 
         var maxHunger = 100;
 
+        // Button variables
+        var feedPetButton = document.getElementById("feedPet");
+        var playWithPetButton = document.getElementById("playWithPet");
+        var restPetButton = document.getElementById("restPet");
+
         // Items that has an effect on the base stats
         var foodItem1 = 5;
         var foodItem2 = 10;
@@ -128,6 +133,13 @@
 
         // Get the pet-name ID and print it on the document, confirming the name for the user and presents it using Template Literal ``
         document.getElementById("pet-name").textContent = `Your pet's name is ${petName}`;
+
+        // Make function Start Game
+
+        // Click event functions to the buttons
+        feedPetButton.addEventListener("click", feedPet);
+        playWithPetButton.addEventListener("click", playWithPet);
+        restPetButton.addEventListener("click", restPet);
 
         function decreaseStats() 
         {
@@ -172,9 +184,9 @@
                     {
                         health--;   
                     }
-                else
+                else if (health < maxHealth)
                 {
-                    health = maxHealth;
+                    health++;
                 }
             }        
         updateStats(); // Update the stats
@@ -186,14 +198,23 @@
     // Start the loop to decrease health IF hunger is 0
     decreaseHealth();
 
-            
+
+    function disableButtons(button, delay) 
+    {
+        button.disabled = true; // Disables the button
+        setTimeout(() => 
+        {
+            button.disabled = false; // activates the button after the delay is done
+        }, delay);
+    }
+
     // Feeding the pet
     function feedPet() 
     {
         if (hunger < maxHunger) 
         {
             hunger = Math.min(maxHunger, hunger + foodItem1);
-            energy = Math.min(maxEnergy, energy + foodItem1);
+            disableButtons(feedPetButton, 3000);
             updateStats();
         }
     }
@@ -206,6 +227,7 @@
             happiness = Math.min(maxHappiness, happiness + toyItem1);
             energy = Math.max(0, energy - toyItem1);
             hunger = Math.max(0, hunger - toyItem1);
+            disableButtons(playWithPetButton, 4000);
             updateStats();
         }
     }
@@ -215,6 +237,7 @@
     {
         if (energy < maxEnergy) {
             energy = Math.min(maxEnergy, energy + restingTime);
+            disableButtons(restPetButton, 3000);
             updateStats();
         }
     }
