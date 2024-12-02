@@ -128,56 +128,102 @@
 
         // Get the pet-name ID and print it on the document, confirming the name for the user and presents it using Template Literal ``
         document.getElementById("pet-name").textContent = `Your pet's name is ${petName}`;
-        
-        // Feeding the pet
-        function feedPet() 
+
+        function decreaseStats() 
         {
-            if (hunger < maxHunger) 
+        for (var i = 0; i < 1; i++) // Loop that will run once
             {
-                hunger = Math.min(maxHunger, hunger + foodItem1);
-                energy = Math.min(maxEnergy, energy + foodItem1);
-                updateStats();
+                // Decrease health stat by 1, but dont go below 0
+                if (health > 0) 
+                {
+                    health--;;
+                } else 
+                {
+                    health = 0;
+                }
+                // Decrease energy stat by 1, but dont go below 0
+                if (energy > 0) 
+                {
+                    energy--;
+                } else 
+                {
+                    energy = 0;
+                }
+                // Decrease happiness stat by 1, but dont go below 0
+                if (happiness > 0) 
+                {
+                    happiness--;
+                } else 
+                {
+                    happiness = 0;
+                }
+                // Decrease hunger stat by 1, but dont go below 0
+                if (hunger > 0) 
+                {
+                    hunger--;
+                } else 
+                {
+                    hunger = 0;
+                }
             }
+
+        updateStats(); // Update the stats
+        setTimeout(decreaseStats, 3000); // Delay in milliseconds for the loop to run again
         }
 
-        // Playing with the pet
-        function playWithPet() 
+    // Start the loop
+    decreaseStats();
+
+            
+    // Feeding the pet
+    function feedPet() 
+    {
+        if (hunger < maxHunger) 
         {
-            if (energy > 0 && hunger > 0 && happiness <= maxHappiness) 
-            {
-                happiness = Math.min(maxHappiness, happiness + toyItem1);
-                energy = Math.max(0, energy - toyItem1);
-                hunger = Math.max(0, hunger - toyItem1);
-                updateStats();
-            }
+            hunger = Math.min(maxHunger, hunger + foodItem1);
+            energy = Math.min(maxEnergy, energy + foodItem1);
+            updateStats();
         }
+    }
 
-        // Resting the pet
-        function restPet() 
+    // Playing with the pet
+    function playWithPet() 
+    {
+        if (energy > 0 && hunger > 0 && happiness <= maxHappiness) 
         {
-            if (energy < maxEnergy) {
-                energy = Math.min(maxEnergy, energy + restingTime);
-                updateStats();
-            }
+            happiness = Math.min(maxHappiness, happiness + toyItem1);
+            energy = Math.max(0, energy - toyItem1);
+            hunger = Math.max(0, hunger - toyItem1);
+            updateStats();
         }
+    }
 
-        // Function to always update the stats after each input the user does, visual update and console log
-        function updateStats()
-        {
-            document.getElementById("health-bar").style.width = (health / maxHealth) * 100 + "%";
-            document.getElementById("health-bar").innerText = health;
-            document.getElementById("energy-bar").style.width = (energy / maxEnergy) * 100 + "%";
-            document.getElementById("energy-bar").innerText = energy;
-            document.getElementById("happiness-bar").style.width = (happiness / maxHappiness) * 100 + "%";
-            document.getElementById("happiness-bar").innerText = happiness;
-            document.getElementById("hunger-bar").style.width = (hunger / maxHunger) * 100 + "%";
-            document.getElementById("hunger-bar").innerText = hunger;
-
-            console.log("Your pet's health is: " + health);
-            console.log("Your pet's hunger is: " + hunger);
-            console.log("Your pet's energy is: " + energy);
-            console.log("Your pet's happiness is: " + happiness);
+    // Resting the pet
+    function restPet() 
+    {
+        if (energy < maxEnergy) {
+            energy = Math.min(maxEnergy, energy + restingTime);
+            updateStats();
         }
-    </script>
-</body>
+    }
+
+    // Function to always update the stats after each input the user does, visual update and console log
+    function updateStats()
+    {
+        document.getElementById("health-bar").style.width = (health / maxHealth) * 100 + "%";
+        document.getElementById("health-bar").innerText = health;
+        document.getElementById("energy-bar").style.width = (energy / maxEnergy) * 100 + "%";
+        document.getElementById("energy-bar").innerText = energy;
+        document.getElementById("happiness-bar").style.width = (happiness / maxHappiness) * 100 + "%";
+        document.getElementById("happiness-bar").innerText = happiness;
+        document.getElementById("hunger-bar").style.width = (hunger / maxHunger) * 100 + "%";
+        document.getElementById("hunger-bar").innerText = hunger;
+
+        console.log("Your pet's health is: " + health);
+        console.log("Your pet's hunger is: " + hunger);
+        console.log("Your pet's energy is: " + energy);
+        console.log("Your pet's happiness is: " + happiness);
+    }
+        </script>
+    </body>
 </html>
