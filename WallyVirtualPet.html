@@ -22,7 +22,7 @@
         }
         .stat-bar 
         {
-            width: 80%;
+            width: 25%;
             height: 20px;
             background-color: #c0c0c0;
             border-radius: 8px;
@@ -92,12 +92,20 @@
         </div>
     </div>
 
-    <!-- Buttons to click -->
+    <!-- Buttons to click to play the game -->
     <div class="buttons">
-        <button id="feedPet">Feed Pet</button>
+        <button id="feedPetFood">Feed Pet</button>
+        <button id="feedPetSnack">Give Pet a snack</button>
+        <button id="cuddleWithPet">Cuddle with Pet</button>
         <button id="playWithPet">Play with Pet</button>
         <button id="restPet">Let the pet rest</button>
     </div>
+
+    <!-- Button to click to read the How-to-play -->
+     <div class="helpButton">
+        <button id="helpbutton"></button>
+
+     </div>
 
     <script>
         // Base stats, both starting numbers and max limit
@@ -115,13 +123,15 @@
         var maxHunger = 100;
 
         // Button variables
-        var feedPetButton = document.getElementById("feedPet");
+        var feedPetFoodButton = document.getElementById("feedPetFood");
+        var feedPetSnackButton = document.getElementById("feedPetSnack")
         var playWithPetButton = document.getElementById("playWithPet");
+        var cuddleWithPetButton = document.getElementById("cuddleWithPet");
         var restPetButton = document.getElementById("restPet");
 
         // Items that has an effect on the base stats
         var foodItem1 = 5;
-        var foodItem2 = 10;
+        var foodItem2 = 15;
         var toyItem1 = 10;
         var toyItem2 = 20;
         var restingTime = 20;
@@ -131,16 +141,18 @@
         var maxBudget = 500;
 
         // Naming pet and confirms pet name
-        var petName = prompt("Welcome to Wally's Virtual Pet! Please name your pet!");
+        var petName = prompt("Welcome to Wally's Virtual Pet! What is the name of your pet?");
 
         // Get the pet-name ID and print it on the document, confirming the name for the user and presents it using Template Literal ``
-        document.getElementById("pet-name").textContent = `Your pet's name is ${petName}`;
+        document.getElementById("pet-name").textContent = `Your pet's name is ${petName}, what a lovely name!`;
 
         // Make function Start Game
 
         // Click event functions to the buttons
-        feedPetButton.addEventListener("click", feedPet);
+        feedPetFoodButton.addEventListener("click", feedPetFood);
+        feedPetSnackButton.addEventListener("click", feedPetSnack);
         playWithPetButton.addEventListener("click", playWithPet);
+        cuddleWithPetButton.addEventListener("click", cuddleWithPet);
         restPetButton.addEventListener("click", restPet);
 
         function decreaseStats() 
@@ -181,12 +193,12 @@
         {
             for (var i = 0; i < 1; i++) // Loop that will run once
             {
-                // Decrease health stat by 1, but dont go below 0
+                // Decrease health stat by x, but dont go below 0
                 if (hunger <= 0)
                     {
-                        health--;   
+                        health = health - 3;   
                     }
-                else if (health < maxHealth)
+                else if ((hunger > 30) && (health < maxHealth))
                 {
                     health++;
                 }
@@ -210,13 +222,24 @@
         }, delay);
     }
 
-    // Feeding the pet
-    function feedPet() 
+    // Feeding the pet food
+    function feedPetFood() 
+    {
+        if (hunger < maxHunger) 
+        {
+            hunger = Math.min(maxHunger, hunger + foodItem2);
+            disableButtons(feedPetFoodButton, 3000);
+            updateStats();
+        }
+    }
+
+     // Feeding the pet a snack
+     function feedPetSnack() 
     {
         if (hunger < maxHunger) 
         {
             hunger = Math.min(maxHunger, hunger + foodItem1);
-            disableButtons(feedPetButton, 3000);
+            disableButtons(feedPetSnackButton, 3000);
             updateStats();
         }
     }
@@ -226,10 +249,23 @@
     {
         if (energy > 0 && hunger > 0 && happiness <= maxHappiness) 
         {
+            happiness = Math.min(maxHappiness, happiness + toyItem2);
+            energy = Math.max(0, energy - toyItem2);
+            hunger = Math.max(0, hunger - toyItem2);
+            disableButtons(playWithPetButton, 4000);
+            updateStats();
+        }
+    }
+
+     // Playing with the pet
+     function cuddleWithPet() 
+    {
+        if (energy > 0 && hunger > 0 && happiness <= maxHappiness) 
+        {
             happiness = Math.min(maxHappiness, happiness + toyItem1);
             energy = Math.max(0, energy - toyItem1);
             hunger = Math.max(0, hunger - toyItem1);
-            disableButtons(playWithPetButton, 4000);
+            disableButtons(cuddleWithPetButton, 4000);
             updateStats();
         }
     }
