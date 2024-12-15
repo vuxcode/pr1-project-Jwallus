@@ -66,6 +66,11 @@
     <!-- pet name as a separate paragraph to showcase it once it's been entered by the user -->
     <p id="pet-name"></p>
 
+     <!-- Visual representation of the coin amount -->
+     <div>
+        <h3>Coins: <span id="coin-amount">30</span></h3>
+    </div>
+
     <!-- Div class containing a health label, stat-bar and style for a visual bar showing the health -->
     <div class="stat">
         <label>Health</label>
@@ -129,16 +134,18 @@
         var cuddleWithPetButton = document.getElementById("cuddleWithPet");
         var restPetButton = document.getElementById("restPet");
 
-        // Items that has an effect on the base stats
-        var foodItem1 = 5;
-        var foodItem2 = 15;
-        var toyItem1 = 10;
-        var toyItem2 = 20;
-        var restingTime = 20;
+         // Items that have an effect on the base stats
+         var foodItem1 = 5;  // Hunger increase for snack
+        var foodItem2 = 15; // Hunger increase for food
+        var foodCost1 = 10; // Coin cost for snack
+        var foodCost2 = 25; // Coin cost for food
+        var toyItem1 = 10;  // Stat changes for cuddling
+        var toyItem2 = 20;  // Stat changes for playing
+        var restingTime = 20; // Energy recovery for rest
 
-        //Coin variables for purchase functionality
-        var coin = 100;
-        var maxBudget = 500;
+        // Coin variables for purchase functionality
+        var coin = 30;  // The starting amount for the coins you have
+        var maxBudget = 100; // The maximum amount of coins the player can have
 
         // Naming pet and confirms pet name
         var petName = prompt("Welcome to Wally's Virtual Pet! What is the name of your pet?");
@@ -211,6 +218,17 @@
     decreaseStats();
     // Start the loop to decrease health IF hunger is 0
     decreaseHealth();
+
+    // Function to increase coins every 5 seconds if happiness is above 70
+    function generateCoins() 
+    {
+        if (happiness > 70 && coin < maxBudget) 
+        {
+            coin += 10; // Add 10 coins as long as happiness is above 70
+            updateCoinDisplay(); // Update the coin display
+        }
+        setTimeout(generateCoins, 5000); // Run every 5 seconds
+    }
 
 
     function disableButtons(button, delay) 
@@ -297,6 +315,15 @@
         console.log("Your pet's energy is: " + energy);
         console.log("Your pet's happiness is: " + happiness);
     }
+
+    // Function to update the coin display
+    function updateCoinDisplay() 
+    {
+        document.getElementById("coin-count").textContent = coin; // Update the coin count
+    }
+
+    generateCoins();
+
         </script>
     </body>
 </html>
